@@ -1,0 +1,3 @@
+include ':pretty-dialog'
+include ':app'
+rootProject.name = "PrettyDialog"
