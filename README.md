@@ -5,4 +5,4 @@
 
 Thanks
 =========================
-- <a href="github.com/H07000223/FlycoDialog_Master">FlycoDialoghttps</a>
+- <a href="github.com/H07000223/FlycoDialog_Master">FlycoDialog</a>
