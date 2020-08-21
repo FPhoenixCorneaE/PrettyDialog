@@ -32,7 +32,7 @@ class CustomPopupActivity : AppCompatActivity() {
                 .gravity(Gravity.BOTTOM)
                 .showAnim(SlideTopEnter())
                 .dismissAnim(SlideTopExit())
-                .offset(0f, 0f)
+                .offset(0f, -10f)
                 .dimEnabled(false)
                 .show()
         }

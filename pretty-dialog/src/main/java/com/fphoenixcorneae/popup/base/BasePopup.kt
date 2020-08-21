@@ -1,8 +1,10 @@
 package com.fphoenixcorneae.popup.base
 
 import android.content.Context
+import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
 import android.widget.LinearLayout
 import com.fphoenixcorneae.dialog.R
 import com.fphoenixcorneae.utils.StatusBarUtils
@@ -44,11 +46,17 @@ abstract class BasePopup<T : BasePopup<T>>(context: Context) :
             val location = IntArray(2)
             mAnchorView!!.getLocationOnScreen(location)
             mX = location[0]
+            var statusBarHeight = StatusBarUtils.getHeight(mContext)
+            window?.apply {
+                if ((attributes.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+                    Log.d(mTag, "全屏显示")
+                    statusBarHeight = 0
+                }
+            }
             mY = if (mGravity == Gravity.TOP) {
-                location[1] - StatusBarUtils.getHeight(mContext)
+                location[1] - statusBarHeight
             } else {
-                (location[1] - StatusBarUtils.getHeight(mContext)
-                        + anchorView.height)
+                location[1] - statusBarHeight + anchorView.height
             }
         }
         return this as T
@@ -64,8 +72,6 @@ abstract class BasePopup<T : BasePopup<T>>(context: Context) :
         if (mAlignCenter) {
             x = mX + mAnchorView!!.width / 2 - mLlContent!!.width / 2
         }
-        x = getX(x)
-        y = getY(y)
         x = getX(x + dp2px(mXOffset))
         y = getY(y + dp2px(mYOffset))
         mLlContent!!.x = x.toFloat()
