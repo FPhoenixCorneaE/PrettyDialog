@@ -178,16 +178,16 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .animatedView(mElv)
             .windowsEnterAnim(WindowsSlipBottomEnter())
             .windowsExitAnim(null)
+            .setOnBtnClickListeners(
+                {
+                    T.showShort(mContext, "left")
+                    it.dismiss()
+                },
+                {
+                    T.showShort(mContext, "right")
+                    it.dismiss()
+                })
             .show()
-        dialog.setOnBtnClickL(
-            {
-                T.showShort(mContext, "left")
-                dialog.dismiss()
-            },
-            {
-                T.showShort(mContext, "right")
-                dialog.dismiss()
-            })
     }
 
     private fun NormalDialogStyleTwo() {
@@ -198,16 +198,16 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
             .animatedView(mElv)
+            .setOnBtnClickListeners(
+                {
+                    T.showShort(mContext, "left")
+                    it.dismiss()
+                },
+                {
+                    T.showShort(mContext, "right")
+                    it.dismiss()
+                })
             .show()
-        dialog.setOnBtnClickL(
-            {
-                T.showShort(mContext, "left")
-                dialog.dismiss()
-            },
-            {
-                T.showShort(mContext, "right")
-                dialog.dismiss()
-            })
     }
 
     private fun NormalDialogCustomAttr() {
@@ -231,16 +231,16 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .animatedView(mElv)
             .windowsEnterAnim(WindowsTaoBaoEnter())
             .windowsExitAnim(WindowsTaoBaoExit())
+            .setOnBtnClickListeners(
+                {
+                    T.showShort(mContext, "left")
+                    it.dismiss()
+                },
+                {
+                    T.showShort(mContext, "right")
+                    it.dismiss()
+                })
             .show()
-        dialog.setOnBtnClickL(
-            {
-                T.showShort(mContext, "left")
-                dialog.dismiss()
-            },
-            {
-                T.showShort(mContext, "right")
-                dialog.dismiss()
-            })
     }
 
     private fun NormalDialogOneBtn() {
@@ -253,11 +253,12 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .animatedView(mElv)
             .windowsEnterAnim(WindowsSlipTopEnter())
             .windowsExitAnim(null)
+            .setOnBtnClickListeners(
+                {
+                    T.showShort(mContext, "middle")
+                    it.dismiss()
+                })
             .show()
-        dialog.setOnBtnClickL({
-            T.showShort(mContext, "middle")
-            dialog.dismiss()
-        })
     }
 
     private fun NormalDialoThreeBtn() {
@@ -271,20 +272,20 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .animatedView(mElv)
             .windowsEnterAnim(WindowsOpenEnter())
             .windowsExitAnim(WindowsCloseExit())
+            .setOnBtnClickListeners(
+                {
+                    T.showShort(mContext, "left")
+                    it.dismiss()
+                },
+                {
+                    T.showShort(mContext, "right")
+                    it.dismiss()
+                },
+                {
+                    T.showShort(mContext, "middle")
+                    it.dismiss()
+                })
             .show()
-        dialog.setOnBtnClickL(
-            {
-                T.showShort(mContext, "left")
-                dialog.dismiss()
-            },
-            {
-                T.showShort(mContext, "right")
-                dialog.dismiss()
-            },
-            {
-                T.showShort(mContext, "middle")
-                dialog.dismiss()
-            })
     }
 
     private fun MaterialDialogDefault() {
@@ -296,21 +297,16 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .btnText("取消", "确定") //
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
+            .setOnBtnClickListeners(
+                {
+                    T.showShort(mContext, "left")
+                    it.dismiss()
+                },
+                {
+                    T.showShort(mContext, "right")
+                    it.dismiss()
+                })
             .show()
-        dialog.setOnBtnClickL(
-
-            //left btn click listener
-            {
-                T.showShort(mContext, "left")
-                dialog.dismiss()
-            },
-
-            //right btn click listener
-            {
-                T.showShort(mContext, "right")
-                dialog.dismiss()
-            }
-        )
     }
 
     private fun MaterialDialogThreeBtns() {
@@ -321,28 +317,20 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .btnText("确定", "取消", "知道了") //
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
+            .setOnBtnClickListeners(
+                {
+                    T.showShort(mContext, "left")
+                    it.dismiss()
+                },
+                {
+                    T.showShort(mContext, "right")
+                    it.dismiss()
+                },
+                {
+                    T.showShort(mContext, "middle")
+                    it.dismiss()
+                })
             .show()
-        dialog.setOnBtnClickL(
-
-            //left btn click listener
-            {
-                T.showShort(mContext, "left")
-                dialog.dismiss()
-            },
-
-            //right btn click listener
-            {
-                T.showShort(mContext, "right")
-                dialog.dismiss()
-            }
-            ,
-
-            //middle btn click listener
-            {
-                T.showShort(mContext, "middle")
-                dialog.dismiss()
-            }
-        )
     }
 
     private fun MaterialDialogOneBtn() {
@@ -353,11 +341,12 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .btnText("确定") //
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
+            .setOnBtnClickListeners(
+                {
+                    T.showShort(mContext, "middle")
+                    it.dismiss()
+                })
             .show()
-        dialog.setOnBtnClickL({
-            T.showShort(mContext, "middle")
-            dialog.dismiss()
-        })
     }
 
     private fun NormalListDialog() {
@@ -366,14 +355,14 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
         dialog.title("请选择") //
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
+            .setOnOperationItemClickListener { dialog, parent, view, position, id ->
+                T.showShort(
+                    mContext,
+                    mMenuItems[position].mOperationName
+                )
+                dialog.dismiss()
+            }
             .show()
-        dialog.setOnOperationItemClickL { parent, view, position, id ->
-            T.showShort(
-                mContext,
-                mMenuItems[position].mOperationName
-            )
-            dialog.dismiss()
-        }
     }
 
     private fun NormalListDialogCustomAttr() {
@@ -387,14 +376,14 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .itemTextSize(14f) //
             .cornerRadius(0f) //
             .widthScale(0.8f) //
+            .setOnOperationItemClickListener { dialog, parent, view, position, id ->
+                T.showShort(
+                    mContext,
+                    mMenuItems[position].mOperationName
+                )
+                dialog.dismiss()
+            }
             .show(R.style.myDialogAnim)
-        dialog.setOnOperationItemClickL { parent, view, position, id ->
-            T.showShort(
-                mContext,
-                mMenuItems[position].mOperationName
-            )
-            dialog.dismiss()
-        }
     }
 
     private fun NormalListDialogNoTitle() {
@@ -407,14 +396,14 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .itemTextSize(15f) //
             .cornerRadius(2f) //
             .widthScale(0.75f) //
+            .setOnOperationItemClickListener { dialog, parent, view, position, id ->
+                T.showShort(
+                    mContext,
+                    mMenuItems[position].mOperationName
+                )
+                dialog.dismiss()
+            }
             .show()
-        dialog.setOnOperationItemClickL { parent, view, position, id ->
-            T.showShort(
-                mContext,
-                mMenuItems[position].mOperationName
-            )
-            dialog.dismiss()
-        }
     }
 
     private fun NormalListDialogStringArr() {
@@ -422,14 +411,14 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             NormalListDialog(mContext, mStringItems)
         dialog.title("请选择") //
             .layoutAnimation(null)
+            .setOnOperationItemClickListener { dialog, parent, view, position, id ->
+                T.showShort(
+                    mContext,
+                    mMenuItems[position].mOperationName
+                )
+                dialog.dismiss()
+            }
             .show(R.style.myDialogAnim)
-        dialog.setOnOperationItemClickL { parent, view, position, id ->
-            T.showShort(
-                mContext,
-                mMenuItems[position].mOperationName
-            )
-            dialog.dismiss()
-        }
     }
 
     private fun NormalListDialogAdapter() {
@@ -438,14 +427,14 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             TestAdapter(mContext, mMenuItems)
         )
         dialog.title("请选择") //
+            .setOnOperationItemClickListener { dialog, parent, view, position, id ->
+                T.showShort(
+                    mContext,
+                    mMenuItems[position].mOperationName
+                )
+                dialog.dismiss()
+            }
             .show(R.style.myDialogAnim)
-        dialog.setOnOperationItemClickL { parent, view, position, id ->
-            T.showShort(
-                mContext,
-                mMenuItems[position].mOperationName
-            )
-            dialog.dismiss()
-        }
     }
 
     private fun ActionSheetDialog() {
@@ -459,11 +448,14 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
         dialog.title("选择群消息提醒方式\r\n(该群在电脑的设置:接收消息并提醒)") //
             .titleTextSize_SP(14.5f) //
             .blurEnabled(true)
+            .setOnOperationItemClickListener { dialog, parent, view, position, id ->
+                T.showShort(
+                    mContext,
+                    stringItems[position]
+                )
+                dialog.dismiss()
+            }
             .show()
-        dialog.setOnOperationItemClickL { parent, view, position, id ->
-            T.showShort(mContext, stringItems[position])
-            dialog.dismiss()
-        }
     }
 
     private fun ActionSheetDialogNoTitle() {
@@ -476,11 +468,14 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
         )
         dialog.isTitleShow(false)
             .blurEnabled(true)
+            .setOnOperationItemClickListener { dialog, parent, view, position, id ->
+                T.showShort(
+                    mContext,
+                    stringItems[position]
+                )
+                dialog.dismiss()
+            }
             .show()
-        dialog.setOnOperationItemClickL { parent, view, position, id ->
-            T.showShort(mContext, stringItems[position])
-            dialog.dismiss()
-        }
     }
 
     override fun onBackPressed() {
@@ -496,15 +491,15 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .btnTextSize(16f, 16f) //
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
+            .setOnBtnClickListeners(
+                {
+                    it.dismiss()
+                },
+                {
+                    it.superDismiss()
+                    finish()
+                })
             .show()
-        dialog.setOnBtnClickL(
-            {
-                dialog.dismiss()
-            },
-            {
-                dialog.superDismiss()
-                finish()
-            })
     }
 
     companion object {

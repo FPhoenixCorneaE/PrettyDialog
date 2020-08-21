@@ -74,14 +74,14 @@ abstract class BaseAlertDialog<T : BaseAlertDialog<T>>(context: Context) :
     protected var mBtnPressColor =
         Color.parseColor("#E3E3E3") // #85D3EF,#ffcccccc,#E3E3E3
 
-    /** left btn click listener(左按钮接口)  */
-    protected var mOnBtnLeftClickL: (()->Unit)?=null
+    /** left btn click listener(左按钮点击监听)  */
+    protected var mOnBtnLeftClickListener: ((dialog: T) -> Unit)? = null
 
-    /** right btn click listener(右按钮接口)  */
-    protected var mOnBtnRightClickL: (()->Unit)? = null
+    /** right btn click listener(右按钮点击监听)  */
+    protected var mOnBtnRightClickListener: ((dialog: T) -> Unit)? = null
 
-    /** middle btn click listener(右按钮接口)  */
-    protected var mOnBtnMiddleClickL: (()->Unit)? = null
+    /** middle btn click listener(中间按钮点击监听)  */
+    protected var mOnBtnMiddleClickListener: ((dialog: T) -> Unit)? = null
 
     /** corner radius,dp(圆角程度,单位dp)  */
     protected var mCornerRadius = 3f
@@ -117,22 +117,22 @@ abstract class BaseAlertDialog<T : BaseAlertDialog<T>>(context: Context) :
             mTvBtnMiddle.visibility = View.GONE
         }
         mTvBtnLeft.setOnClickListener {
-            if (mOnBtnLeftClickL != null) {
-                mOnBtnLeftClickL!!.invoke()
+            if (mOnBtnLeftClickListener != null) {
+                mOnBtnLeftClickListener!!.invoke(this as T)
             } else {
                 dismiss()
             }
         }
         mTvBtnRight.setOnClickListener {
-            if (mOnBtnRightClickL != null) {
-                mOnBtnRightClickL!!.invoke()
+            if (mOnBtnRightClickListener != null) {
+                mOnBtnRightClickListener!!.invoke(this as T)
             } else {
                 dismiss()
             }
         }
         mTvBtnMiddle.setOnClickListener {
-            if (mOnBtnMiddleClickL != null) {
-                mOnBtnMiddleClickL!!.invoke()
+            if (mOnBtnMiddleClickListener != null) {
+                mOnBtnMiddleClickListener!!.invoke(this as T)
             } else {
                 dismiss()
             }
@@ -298,22 +298,23 @@ abstract class BaseAlertDialog<T : BaseAlertDialog<T>>(context: Context) :
      * onBtnClickListeners size 2, left right
      * onBtnClickListeners size 3, left right middle
      */
-    fun setOnBtnClickL(vararg onBtnClickListeners: (()->Unit)?) {
+    fun setOnBtnClickListeners(vararg onBtnClickListeners: ((dialog: T) -> Unit)?): T {
         check(!(onBtnClickListeners.isEmpty() || onBtnClickListeners.size > 3)) { " range of param onBtnClickListeners length is [1,3]!" }
         when (onBtnClickListeners.size) {
             1 -> {
-                mOnBtnMiddleClickL = onBtnClickListeners[0]
+                mOnBtnMiddleClickListener = onBtnClickListeners[0]
             }
             2 -> {
-                mOnBtnLeftClickL = onBtnClickListeners[0]
-                mOnBtnRightClickL = onBtnClickListeners[1]
+                mOnBtnLeftClickListener = onBtnClickListeners[0]
+                mOnBtnRightClickListener = onBtnClickListeners[1]
             }
             3 -> {
-                mOnBtnLeftClickL = onBtnClickListeners[0]
-                mOnBtnRightClickL = onBtnClickListeners[1]
-                mOnBtnMiddleClickL = onBtnClickListeners[2]
+                mOnBtnLeftClickListener = onBtnClickListeners[0]
+                mOnBtnRightClickListener = onBtnClickListeners[1]
+                mOnBtnMiddleClickListener = onBtnClickListeners[2]
             }
         }
+        return this as T
     }
 
     /**

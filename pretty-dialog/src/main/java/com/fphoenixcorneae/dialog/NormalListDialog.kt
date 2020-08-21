@@ -13,9 +13,9 @@ import android.view.animation.LayoutAnimationController
 import android.view.animation.TranslateAnimation
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import com.fphoenixcorneae.dialog.base.BaseDialog
 import com.fphoenixcorneae.dialog.entity.DialogMenuItem
 import com.fphoenixcorneae.utils.CornerUtils
-import com.fphoenixcorneae.dialog.base.BaseDialog
 import java.util.*
 
 class NormalListDialog : BaseDialog<NormalListDialog> {
@@ -71,16 +71,10 @@ class NormalListDialog : BaseDialog<NormalListDialog> {
     private var mAdapter: BaseAdapter? = null
 
     /** operation items(操作items)  */
-    private var mContents =
-        ArrayList<DialogMenuItem>()
-    private var mOnOperationItemClickListener: ((parent: AdapterView<*>?, view: View?, position: Int, id: Long) -> Unit)? =
+    private var mContents = ArrayList<DialogMenuItem>()
+    private var mOnOperationItemClickListener: ((dialog: NormalListDialog, parent: AdapterView<*>?, view: View?, position: Int, id: Long) -> Unit)? =
         null
     private var mLac: LayoutAnimationController? = null
-    fun setOnOperationItemClickL(
-        onOperationItemClickListener: ((parent: AdapterView<*>?, view: View?, position: Int, id: Long) -> Unit)?
-    ) {
-        mOnOperationItemClickListener = onOperationItemClickListener
-    }
 
     constructor(
         context: Context,
@@ -180,7 +174,7 @@ class NormalListDialog : BaseDialog<NormalListDialog> {
         }
         mLv!!.adapter = mAdapter
         mLv!!.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-                mOnOperationItemClickListener?.invoke(parent, view, position, id)
+            mOnOperationItemClickListener?.invoke(this, parent, view, position, id)
         }
         mLv!!.layoutAnimation = mLac
     }
@@ -274,6 +268,19 @@ class NormalListDialog : BaseDialog<NormalListDialog> {
     /** set layoutAnimation(设置layout动画 ,传入null将不显示layout动画)  */
     fun layoutAnimation(lac: LayoutAnimationController?): NormalListDialog {
         mLac = lac
+        return this
+    }
+
+    fun setOnOperationItemClickListener(
+        onOperationItemClickListener: ((
+            dialog: NormalListDialog,
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) -> Unit)?
+    ): NormalListDialog {
+        mOnOperationItemClickListener = onOperationItemClickListener
         return this
     }
 

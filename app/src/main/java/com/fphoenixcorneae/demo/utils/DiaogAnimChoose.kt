@@ -83,7 +83,7 @@ object DiaogAnimChoose {
             .cancelText("cancel")
             .show()
         dialog.setCanceledOnTouchOutside(false)
-        dialog.setOnOperationItemClickL { parent, view, position, id ->
+        dialog.setOnOperationItemClickListener { dialog, parent, view, position, id ->
             try {
                 val animType = contents[position]
                 (context as DialogHomeActivity).setBasIn(
@@ -128,7 +128,7 @@ object DiaogAnimChoose {
             .titleTextSize_SP(14.5f) //
             .cancelText("cancel")
             .show()
-        dialog.setOnOperationItemClickL { parent, view, position, id ->
+        dialog.setOnOperationItemClickListener { dialog, parent, view, position, id ->
             try {
                 val animType = contents[position]
                 (context as DialogHomeActivity).setBasOut(

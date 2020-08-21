@@ -91,21 +91,16 @@ class ActionSheetDialog : BottomBaseDialog<ActionSheetDialog> {
     /** operation items(操作items)  */
     private var mContents = ArrayList<DialogMenuItem>()
 
-    private var mOnOperationItemClickListener: ((parent: AdapterView<*>?, view: View?, position: Int, id: Long) -> Unit)? =
+    private var mOnOperationItemClickListener: ((
+        dialog: ActionSheetDialog,
+        parent: AdapterView<*>?,
+        view: View?,
+        position: Int,
+        id: Long
+    ) -> Unit)? =
         null
 
     private var mLac: LayoutAnimationController? = null
-
-    fun setOnOperationItemClickL(
-        onOperationItemClickListener: ((
-            parent: AdapterView<*>?,
-            view: View?,
-            position: Int,
-            id: Long
-        ) -> Unit)?
-    ) {
-        mOnOperationItemClickListener = onOperationItemClickListener
-    }
 
     constructor(
         context: Context,
@@ -253,7 +248,7 @@ class ActionSheetDialog : BottomBaseDialog<ActionSheetDialog> {
         }
         mLv!!.adapter = mAdapter
         mLv!!.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-            mOnOperationItemClickListener?.invoke(parent, view, position, id)
+            mOnOperationItemClickListener?.invoke(this, parent, view, position, id)
         }
         mLv!!.layoutAnimation = mLac
     }
@@ -363,6 +358,19 @@ class ActionSheetDialog : BottomBaseDialog<ActionSheetDialog> {
     /** cancel btn text size(取消按钮文字大小)  */
     fun cancelTextSize(cancelTextSize: Float): ActionSheetDialog {
         mCancelTextSize = cancelTextSize
+        return this
+    }
+
+    fun setOnOperationItemClickListener(
+        onOperationItemClickListener: ((
+            dialog: ActionSheetDialog,
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) -> Unit)?
+    ): ActionSheetDialog {
+        mOnOperationItemClickListener = onOperationItemClickListener
         return this
     }
 
