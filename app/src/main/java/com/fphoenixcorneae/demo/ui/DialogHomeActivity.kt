@@ -11,11 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fphoenixcorneae.animation.BaseAnimatorSet
 import com.fphoenixcorneae.animation.bounce.BounceTopEnter
 import com.fphoenixcorneae.animation.slide.SlideBottomExit
-import com.fphoenixcorneae.dialog.entity.DialogMenuItem
-import com.fphoenixcorneae.dialog.ActionSheetDialog
-import com.fphoenixcorneae.dialog.MaterialDialog
-import com.fphoenixcorneae.dialog.NormalDialog
-import com.fphoenixcorneae.dialog.NormalListDialog
+import com.fphoenixcorneae.animation.windows.*
 import com.fphoenixcorneae.demo.R
 import com.fphoenixcorneae.demo.adapter.HomeAdapter
 import com.fphoenixcorneae.demo.adapter.TestAdapter
@@ -25,6 +21,11 @@ import com.fphoenixcorneae.demo.extra.ShareBottomDialog
 import com.fphoenixcorneae.demo.extra.ShareTopDialog
 import com.fphoenixcorneae.demo.utils.DiaogAnimChoose
 import com.fphoenixcorneae.demo.utils.T
+import com.fphoenixcorneae.dialog.ActionSheetDialog
+import com.fphoenixcorneae.dialog.MaterialDialog
+import com.fphoenixcorneae.dialog.NormalDialog
+import com.fphoenixcorneae.dialog.NormalListDialog
+import com.fphoenixcorneae.dialog.entity.DialogMenuItem
 import kotlinx.android.synthetic.main.ac_dialog_home.*
 import java.util.*
 
@@ -174,6 +175,9 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
             .blurEnabled(true)
+            .animatedView(mElv)
+            .windowsEnterAnim(WindowsSlipBottomEnter())
+            .windowsExitAnim(null)
             .show()
         dialog.setOnBtnClickL(
             {
@@ -193,6 +197,7 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .titleTextSize(23f) //
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
+            .animatedView(mElv)
             .show()
         dialog.setOnBtnClickL(
             {
@@ -223,6 +228,9 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .widthScale(0.85f) //
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
+            .animatedView(mElv)
+            .windowsEnterAnim(WindowsTaoBaoEnter())
+            .windowsExitAnim(WindowsTaoBaoExit())
             .show()
         dialog.setOnBtnClickL(
             {
@@ -242,6 +250,9 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .btnText("继续逛逛") //
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
+            .animatedView(mElv)
+            .windowsEnterAnim(WindowsSlipTopEnter())
+            .windowsExitAnim(null)
             .show()
         dialog.setOnBtnClickL({
             T.showShort(mContext, "middle")
@@ -257,6 +268,9 @@ class DialogHomeActivity : AppCompatActivity(), OnChildClickListener {
             .btnText("取消", "确定", "继续逛逛") //
             .showAnim(mBasIn) //
             .dismissAnim(mBasOut) //
+            .animatedView(mElv)
+            .windowsEnterAnim(WindowsOpenEnter())
+            .windowsExitAnim(WindowsCloseExit())
             .show()
         dialog.setOnBtnClickL(
             {

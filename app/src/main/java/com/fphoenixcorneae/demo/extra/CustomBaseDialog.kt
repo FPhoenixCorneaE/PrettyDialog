@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.dialog_custom_base.*
 
 class CustomBaseDialog(context: Context) :
     BaseDialog<CustomBaseDialog>(context) {
+
     override fun onCreateView(): View {
         widthScale(0.85f)
         showAnim(Swing())

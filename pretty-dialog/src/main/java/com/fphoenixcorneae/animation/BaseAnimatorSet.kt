@@ -95,15 +95,19 @@ abstract class BaseAnimatorSet {
     companion object {
 
         fun reset(view: View) {
-            view.apply {
-                alpha = 1f
-                scaleX = 1f
-                scaleY = 1f
-                translationX = 0f
-                translationY = 0f
-                rotation = 0f
-                rotationY = 0f
-                rotationX = 0f
+            view.post {
+                view.apply {
+                    alpha = 1f
+                    scaleX = 1f
+                    scaleY = 1f
+                    translationX = 0f
+                    translationY = 0f
+                    rotation = 0f
+                    rotationY = 0f
+                    rotationX = 0f
+                    pivotX = view.measuredWidth / 2f
+                    pivotY = view.measuredHeight / 2f
+                }
             }
         }
     }

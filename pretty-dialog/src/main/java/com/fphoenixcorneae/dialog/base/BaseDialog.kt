@@ -12,14 +12,18 @@ import android.os.Looper
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
+import android.view.animation.Animation
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.fphoenixcorneae.animation.BaseAnimatorSet
+import com.fphoenixcorneae.animation.windows.WindowsScaleEnter
+import com.fphoenixcorneae.animation.windows.WindowsScaleExit
 import com.fphoenixcorneae.utils.StatusBarUtils
 import com.github.mmin18.widget.RealtimeBlurView
 
-abstract class BaseDialog<T : BaseDialog<T>>(context: Context) :
-    Dialog(context) {
+abstract class BaseDialog<T : BaseDialog<T>>(
+    context: Context
+) : Dialog(context) {
     /**
      * mTag(日志)
      */
@@ -114,6 +118,22 @@ abstract class BaseDialog<T : BaseDialog<T>>(context: Context) :
     private var mAutoDismissDelay: Long = 1500
     private val mHandler = Handler(Looper.getMainLooper())
 
+    /**
+     * displays the rootView of the dialog's activity(显示dialog的activity的rootView)
+     */
+    private var mAnimatedView: View? = null
+    private var mWindowsEnterAnim: BaseAnimatorSet? = WindowsScaleEnter()
+    private var mWindowsExitAnim: BaseAnimatorSet? = WindowsScaleExit()
+
+    /**
+     * 对话框显示动画
+     */
+    private var mInnerShowAnim: Animation? = null
+    private var mInnerDismissAnim: Animation? = null
+    private var mInnerAnimDuration: Long = 350
+    private var mIsInnerShowAnim = false
+    private var mIsInnerDismissAnim = false
+
     constructor(context: Context, isPopupStyle: Boolean) : this(context) {
         mIsPopupStyle = isPopupStyle
     }
@@ -137,7 +157,7 @@ abstract class BaseDialog<T : BaseDialog<T>>(context: Context) :
     </pre> *
      */
     abstract fun onCreateView(): View?
-    
+
     open fun onViewCreated(inflate: View?) {}
 
     /**
@@ -222,7 +242,7 @@ abstract class BaseDialog<T : BaseDialog<T>>(context: Context) :
                 ViewGroup.LayoutParams.WRAP_CONTENT
             }
             1f -> {
-    //            height = ViewGroup.LayoutParams.MATCH_PARENT;
+                //            height = ViewGroup.LayoutParams.MATCH_PARENT;
                 mMaxHeight.toInt()
             }
             else -> {
@@ -251,6 +271,25 @@ abstract class BaseDialog<T : BaseDialog<T>>(context: Context) :
         } else {
             BaseAnimatorSet.reset(mLlControlHeight)
             delayDismiss()
+        }
+
+        // show dialog and mAnimateView with inner show animation(设置dialog和animateView显示动画)
+        if (mInnerShowAnim != null) {
+            mInnerShowAnim!!.duration = mInnerAnimDuration
+            mInnerShowAnim!!.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {
+                    mIsInnerShowAnim = true
+                }
+
+                override fun onAnimationRepeat(animation: Animation) {}
+                override fun onAnimationEnd(animation: Animation) {
+                    mIsInnerShowAnim = false
+                }
+            })
+            mLlControlHeight.startAnimation(mInnerShowAnim)
+        }
+        if (mAnimatedView != null) {
+            mWindowsEnterAnim?.duration(mInnerAnimDuration)?.playOn(mAnimatedView!!)
         }
     }
 
@@ -298,8 +337,25 @@ abstract class BaseDialog<T : BaseDialog<T>>(context: Context) :
                     superDismiss()
                 }
             }).playOn(mLlControlHeight)
+        } else if (mInnerDismissAnim != null) {
+            mInnerDismissAnim!!.duration = mInnerAnimDuration
+            mInnerDismissAnim!!.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {
+                    mIsInnerDismissAnim = true
+                }
+
+                override fun onAnimationRepeat(animation: Animation) {}
+                override fun onAnimationEnd(animation: Animation) {
+                    mIsInnerDismissAnim = false
+                    superDismiss()
+                }
+            })
+            mLlControlHeight.startAnimation(mInnerDismissAnim)
         } else {
             superDismiss()
+        }
+        if (mAnimatedView != null) {
+            mWindowsExitAnim?.duration(mInnerAnimDuration)?.playOn(mAnimatedView!!)
         }
     }
 
@@ -415,14 +471,52 @@ abstract class BaseDialog<T : BaseDialog<T>>(context: Context) :
         }
     }
 
+    /**
+     * set animatedView(显示dialog的activity的rootView)
+     */
+    fun animatedView(animatedView: View?): T {
+        mAnimatedView = animatedView
+        return this as T
+    }
+
+    /** set enter animation of animateView(设置animateView显示动画)  */
+    fun windowsEnterAnim(windowsEnterAnim: BaseAnimatorSet?): T {
+        mWindowsEnterAnim = windowsEnterAnim
+        return this as T
+    }
+
+    /** set exit animation of animateView(设置animateView消失动画)  */
+    fun windowsExitAnim(windowsExitAnim: BaseAnimatorSet?): T {
+        mWindowsExitAnim = windowsExitAnim
+        return this as T
+    }
+
+    /** set inner animation of dialog(设置dialog内置显示动画)  */
+    fun innerShowAnim(innerShowAnim: Animation?): T {
+        mInnerShowAnim = innerShowAnim
+        return this as T
+    }
+
+    /** set dismiss animation of dialog(设置dialog内置消失动画)  */
+    fun innerDismissAnim(innerDismissAnim: Animation?): T {
+        mInnerDismissAnim = innerDismissAnim
+        return this as T
+    }
+
+    /** set duration for inner animation of dialog and animateView(设置dialog内置动画和animateView动画时长)  */
+    fun innerAnimDuration(innerAnimDuration: Long): T {
+        mInnerAnimDuration = innerAnimDuration
+        return this as T
+    }
+
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        return if (mIsDismissAnim || mIsShowAnim || mAutoDismiss) {
+        return if (mIsDismissAnim || mIsShowAnim || mAutoDismiss || mIsInnerDismissAnim || mIsInnerShowAnim) {
             true
         } else super.dispatchTouchEvent(ev)
     }
 
     override fun onBackPressed() {
-        if (mIsDismissAnim || mIsShowAnim || mAutoDismiss) {
+        if (mIsDismissAnim || mIsShowAnim || mAutoDismiss || mIsInnerDismissAnim || mIsInnerShowAnim) {
             return
         }
         super.onBackPressed()
