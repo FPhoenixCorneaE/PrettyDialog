@@ -10,10 +10,9 @@ import com.fphoenixcorneae.animation.BaseAnimatorSet
 class SlideTopExit : BaseAnimatorSet() {
 
     override fun setAnimation(view: View) {
-        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        val height = view.measuredHeight.toFloat()
+        val displayMetrics = view.context.resources.displayMetrics
         animatorSet.playTogether(
-            ObjectAnimator.ofFloat(view, "translationY", 0f, -height),
+            ObjectAnimator.ofFloat(view, "translationY", 0f, -displayMetrics.heightPixels / 2f),
             ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
         )
     }

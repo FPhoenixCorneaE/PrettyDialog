@@ -11,7 +11,11 @@ class FadeExit : BaseAnimatorSet() {
 
     override fun setAnimation(view: View) {
         animatorSet.playTogether(
-            ObjectAnimator.ofFloat(view, "alpha", 1f, 0f).setDuration(duration)
+            ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
         )
+    }
+
+    init {
+        duration = 1000
     }
 }

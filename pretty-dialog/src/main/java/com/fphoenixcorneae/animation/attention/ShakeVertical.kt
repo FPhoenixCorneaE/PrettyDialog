@@ -1,5 +1,7 @@
 package com.fphoenixcorneae.animation.attention
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.view.View
 import android.view.animation.CycleInterpolator
@@ -14,6 +16,11 @@ class ShakeVertical : BaseAnimatorSet() {
         val animator = ObjectAnimator.ofFloat(view, "translationY", -10f, 10f)
         animator.interpolator = CycleInterpolator(5f)
         animatorSet.playTogether(animator)
+        animatorSet.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                reset(view)
+            }
+        })
     }
 
     init {

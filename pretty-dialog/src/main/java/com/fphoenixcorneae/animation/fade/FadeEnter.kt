@@ -11,7 +11,11 @@ class FadeEnter : BaseAnimatorSet() {
 
     override fun setAnimation(view: View) {
         animatorSet.playTogether(
-            ObjectAnimator.ofFloat(view, "alpha", 0f, 1f).setDuration(duration)
+            ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
         )
+    }
+
+    init {
+        duration = 1000
     }
 }

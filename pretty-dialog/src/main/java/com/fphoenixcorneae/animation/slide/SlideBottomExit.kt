@@ -9,8 +9,9 @@ import com.fphoenixcorneae.animation.BaseAnimatorSet
  */
 class SlideBottomExit : BaseAnimatorSet() {
     override fun setAnimation(view: View) {
+        val displayMetrics = view.context.resources.displayMetrics
         animatorSet.playTogether(
-            ObjectAnimator.ofFloat(view, "translationY", 0f, 300f),
+            ObjectAnimator.ofFloat(view, "translationY", 0f, displayMetrics.heightPixels / 2f),
             ObjectAnimator.ofFloat(view, "alpha", 1f, 0f)
         )
     }

@@ -143,8 +143,10 @@ abstract class BaseDialog<T : BaseDialog<T>>(
      */
     private fun setDialogTheme() {
         requestWindowFeature(Window.FEATURE_NO_TITLE) // android:windowNoTitle
-        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // android:windowBackground
-        window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND) // android:backgroundDimEnabled默认是true的
+        window?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // android:windowBackground
+            addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND) // android:backgroundDimEnabled默认是true的
+        }
     }
 
     /**

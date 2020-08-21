@@ -10,9 +10,10 @@ import com.fphoenixcorneae.animation.BaseAnimatorSet
 class SlideLeftEnter : BaseAnimatorSet() {
 
     override fun setAnimation(view: View) {
+        val displayMetrics = view.context.resources.displayMetrics
         animatorSet.playTogether(
-            ObjectAnimator.ofFloat(view, "translationX", -300f, 0f),
-            ObjectAnimator.ofFloat(view, "alpha", 0.2f, 1f)
+            ObjectAnimator.ofFloat(view, "translationX", -displayMetrics.widthPixels / 2f, 0f),
+            ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
         )
     }
 }

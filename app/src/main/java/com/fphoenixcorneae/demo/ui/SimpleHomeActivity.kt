@@ -3,16 +3,15 @@ package com.fphoenixcorneae.demo.ui
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
+import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.BaseAdapter
-import android.widget.ListView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.fphoenixcorneae.demo.ui.DialogHomeActivity
 
@@ -35,7 +34,11 @@ class SimpleHomeActivity : AppCompatActivity() {
             val intent = Intent(mContext, mClazzs[position])
             startActivity(intent)
         }
+        val layoutParams = FrameLayout.LayoutParams(-1, -2)
+        layoutParams.gravity = Gravity.CENTER
+        lv.layoutParams = layoutParams
         setContentView(lv)
+        window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
     }
 
     internal inner class SimpleHomeAdapter : BaseAdapter() {
@@ -56,12 +59,12 @@ class SimpleHomeActivity : AppCompatActivity() {
             convertView: View?,
             parent: ViewGroup
         ): View {
-            val padding = (mDisplayMetrics!!.density * 10).toInt()
+            val padding = (mDisplayMetrics!!.density * 20).toInt()
             val tv = TextView(mContext)
             tv.text = mItems[position]
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
             tv.setTextColor(Color.parseColor("#468ED0"))
-            // tv.setGravity(Gravity.CENTER);
+            tv.setGravity(Gravity.CENTER);
             tv.setPadding(padding, padding, padding, padding)
             val lp = AbsListView.LayoutParams(
                 AbsListView.LayoutParams.MATCH_PARENT,
