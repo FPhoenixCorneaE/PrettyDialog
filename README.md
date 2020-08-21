@@ -30,7 +30,7 @@ allprojects {
 **Step 2.** Add the dependency
 ```groovy
 dependencies {
-	implementation 'com.github.FPhoenixCorneaE:PrettyDialog:1.0.0'
+	implementation 'com.github.FPhoenixCorneaE:PrettyDialog:1.0.1'
 }
 ```
 
